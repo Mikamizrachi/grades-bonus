@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, 
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTableWidget
 
 
 
@@ -15,6 +15,10 @@ class GradesWindow(QWidget):
 
         self.open_btn = QPushButton("Choose File")
         self.open_btn.clicked.connect(self.choose_file)
+
+        self.table = QTableWidget(50, 3)
+        self.table.setHorizontalHeaderLabels(["ID", "Original Grades", "Corrected Grades"])
+        
 
 
     def choose_file(self):
