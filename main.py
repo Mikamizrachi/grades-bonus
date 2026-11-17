@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTableWidget, QSpinBox
-
+from About import About
 
 
 class GradesWindow(QWidget):
@@ -25,6 +25,11 @@ class GradesWindow(QWidget):
 
         self.update_btn =QPushButton("Update File")
         self.update_btn.clicked.connect(self.update_file)
+
+        self.about_btn = QPushButton("About")
+        self.about_btn.clicked.connect(self.show_about)
+
+
 
 
 
@@ -67,12 +72,10 @@ class GradesWindow(QWidget):
         self.open_file(self.selected_file)
 
 
-    def update_table(self):
-        self.table.clearContents()
-        for i in range(len(self.student_ids)):
-            self.table.setItem(i, 0, QTableWidgetItem(self.student_ids[i]))
-            self.table.setItem(i, 1, QTableWidgetItem(str(self.original_grades[i])))
-            self.table.setItem(i, 2, QTableWidgetItem(str(self.corrected_grades[i]))
+    def show_about(self):
+        self.about = About()
+        self.about.show()
+
 
 
 
