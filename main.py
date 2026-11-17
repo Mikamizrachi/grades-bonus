@@ -1,5 +1,5 @@
 import sys, os, csv, subprocess, platform
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTableWidget, QVBoxLayout,QSpinBox, QHBoxLayout, QLabel, QTableWidgetItem,QMessageBox
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTableWidget, QVBoxLayout,QSpinBox, QHBoxLayout, QLabel, QTableWidgetItem,QMessageBox, QHeaderView
 from About import About
 
 
@@ -19,6 +19,7 @@ class GradesWindow(QWidget):
 
         self.table = QTableWidget(50, 3)
         self.table.setHorizontalHeaderLabels(["ID", "Original Grades", "Corrected Grades"])
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         self.bonus_spin = QSpinBox()
         self.bonus_spin.setRange(0, 100)
