@@ -23,6 +23,9 @@ class GradesWindow(QWidget):
         self.bonus_spin.setRange(0, 100)
         self.bonus_spin.lineEdit().returnPressed.connect(self.apply_bonus)
 
+        self.update_btn =QPushButton("Update File")
+        self.update_btn.clicked.connect(self.update_file)
+
 
 
 
@@ -51,6 +54,25 @@ class GradesWindow(QWidget):
             self.corrected_grades[i] = min(self.original_grades[i] + bonus, 100)
         self.update_table()
 
+
+    def update_file(self):
+        if not self.selected_file:
+            QMessageBox.warning(self, "Error", "Please choose a file first")
+            return
+        with open(self.selected_file, "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(self.header)
+            for sid, grade in zip(self.student_ids, self.corrected_grades):
+                writer.writerow([sid, grade])
+        self.open_file(self.selected_file)
+
+
+    def update_table(self):
+        self.table.clearContents()
+        for i in range(len(self.student_ids)):
+            self.table.setItem(i, 0, QTableWidgetItem(self.student_ids[i]))
+            self.table.setItem(i, 1, QTableWidgetItem(str(self.original_grades[i])))
+            self.table.setItem(i, 2, QTableWidgetItem(str(self.corrected_grades[i]))
 
 
 
