@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTableWidget
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTableWidget, QSpinBox
 
 
 
@@ -18,7 +18,13 @@ class GradesWindow(QWidget):
 
         self.table = QTableWidget(50, 3)
         self.table.setHorizontalHeaderLabels(["ID", "Original Grades", "Corrected Grades"])
-        
+
+        self.bonus_spin = QSpinBox()
+        self.bonus_spin.setRange(0, 100)
+        self.bonus_spin.lineEdit().returnPressed.connect(self.apply_bonus)
+
+
+
 
 
     def choose_file(self):
@@ -39,6 +45,11 @@ class GradesWindow(QWidget):
         self.corrected_grades = self.original_grades.copy()
         self.update_table()
 
+    def apply_bonus(self):
+        bonus = self.bonus_spin.value()
+        for i in range(len(self.original_grades)):
+            self.corrected_grades[i] = min(self.original_grades[i] + bonus, 100)
+        self.update_table()
 
 
 
