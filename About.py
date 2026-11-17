@@ -32,6 +32,11 @@ class About(QWidget):
         image = QPixmap("mika.jpg").scaled(200, 200)
         self.my_picture.setPixmap(image)
 
+        self.github = QLabel('🐙<a href="https://github.com/Mikamizrachi/grades-bonus">  My GitHub</a>', self)
+        self.github.setGeometry(70, 360, 250, 30)
+        self.github.setStyleSheet("font-size: 14px;")
+        self.github.setOpenExternalLinks(True)
+
 
 if __name__ == "__main__":
     app = QApplication()
