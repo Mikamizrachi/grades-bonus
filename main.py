@@ -1,4 +1,5 @@
-from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTableWidget, QSpinBox
+import sys, os, csv, subprocess, platform
+from PySide6.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTableWidget, QVBoxLayout,QSpinBox, QHBoxLayout, QLabel, QTableWidgetItem,QMessageBox
 from About import About
 
 
@@ -28,6 +29,20 @@ class GradesWindow(QWidget):
 
         self.about_btn = QPushButton("About")
         self.about_btn.clicked.connect(self.show_about)
+
+        bonus_row = QHBoxLayout()
+        bonus_row.addWidget(QLabel("Bonus:"))
+        bonus_row.addWidget(self.bonus_spin)
+
+        buttons_row = QHBoxLayout()
+        buttons_row.addWidget(self.update_btn)
+        buttons_row.addWidget(self.about_btn)
+
+        layout = QVBoxLayout(self)
+        layout.addWidget(self.open_btn)
+        layout.addWidget(self.table)
+        layout.addLayout(bonus_row)
+        layout.addLayout(buttons_row)
 
 
 
@@ -76,6 +91,30 @@ class GradesWindow(QWidget):
         self.about = About()
         self.about.show()
 
+    def update_table(self):
+        self.table.clearContents()
+        for i in range(len(self.student_ids)):
+            self.table.setItem(i, 0, QTableWidgetItem(self.student_ids[i]))
+            self.table.setItem(i, 1, QTableWidgetItem(str(self.original_grades[i])))
+            self.table.setItem(i, 2, QTableWidgetItem(str(self.corrected_grades[i])))
+
+    def open_file(self, path):
+        system = platform.system()
+        if system == "Windows":
+            os.startfile(path)
+        elif system == "Darwin":
+            subprocess.call(["open", path])
+        else:
+            subprocess.call(["xdg-open", path])
 
 
 
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    qss_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "style.qss")
+    with open(qss_path, encoding="utf-8") as f:
+        app.setStyleSheet(f.read())
+    window = GradesWindow()
+    window.resize(500, 600)
+    window.show()
+    sys.exit(app.exec())
