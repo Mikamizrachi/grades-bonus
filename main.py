@@ -30,20 +30,33 @@ class GradesWindow(QWidget):
 
         self.about_btn = QPushButton("About")
         self.about_btn.clicked.connect(self.show_about)
+        self.about_btn.setObjectName("aboutBtn")
+        self.about_btn.setFixedWidth(80)
+
+        self.open_btn.setObjectName("chooseBtn")
+        self.open_btn.setFixedWidth(250)
+
+        top_row = QHBoxLayout()
+        top_row.addWidget(self.about_btn)
+        top_row.addStretch()
+
+        choose_row = QHBoxLayout()
+        choose_row.addStretch()
+        choose_row.addWidget(self.open_btn)
+        choose_row.addStretch()
 
         bonus_row = QHBoxLayout()
         bonus_row.addWidget(QLabel("Bonus:"))
         bonus_row.addWidget(self.bonus_spin)
 
-        buttons_row = QHBoxLayout()
-        buttons_row.addWidget(self.update_btn)
-        buttons_row.addWidget(self.about_btn)
-
         layout = QVBoxLayout(self)
-        layout.addWidget(self.open_btn)
+        layout.addLayout(top_row)
+        layout.addLayout(choose_row)
         layout.addWidget(self.table)
         layout.addLayout(bonus_row)
-        layout.addLayout(buttons_row)
+        layout.addWidget(self.update_btn)
+
+  
 
 
 
